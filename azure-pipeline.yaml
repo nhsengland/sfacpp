@@ -1,0 +1,62 @@
+trigger:
+  branches:
+    include:
+      - main
+      - releases/*
+      - prerelease/*
+
+pool:
+  name: udal-linux-dda
+
+variables:
+- name: release_name
+  ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/main') }}:
+    value: latest
+  ${{ else }}:
+    value: ${{ replace(replace(variables['Build.SourceBranch'], 'refs/heads/', ''), '/', '_') }}
+- name: branch_name
+  ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/main') }}:
+    value: $[replace(variables['Build.SourceBranch'], 'refs/heads/', '')]
+  ${{ else }}:
+    value: $[replace(variables['Build.SourceBranch'], 'refs/heads/feature/', '')]
+- name: IS_MAIN
+  ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/main') }}:
+    value: 1
+  ${{ else }}:
+    value: 0
+- name: should_run_ut
+  value: 1
+# **** Github Sync Variables ****
+- group: techeff_github
+- name: GITHUB_REPO_NAME
+  value: 'sfacpp'
+- name: gh_push_url_base
+  value: $[variables.GITHUB_PUSH_URL_BASE]
+- name: gh_repo_name
+  value: $[variables.GITHUB_REPO_NAME]
+- name: GITHUB_REPO_URL
+  value: '$(gh_push_url_base)/$(gh_repo_name)'
+- name: GITHUB_PUSH_URL
+  value: '$(gh_push_url_base)/$(gh_repo_name)'
+- name: gh_name
+  value: $[variables.GITHUB_USER_DISPLAYNAME]
+- name: gh_email
+  value: $[variables.GITHUB_USER_EMAIL]
+- name: BRANCH_NAME
+  value: $[replace(variables['Build.SourceBranch'], 'refs/heads/', '')]
+
+
+stages:
+- stage: build_pkg
+  displayName: Build wheel and deploy to Artifact Feed
+  jobs:
+  - job: build_package
+    steps:
+    - template: devops/pipelines/packaging.yml
+- stage: sync_to_gh
+  displayName: Sync repo to GitHub
+  jobs:
+    - job: sync_to_github
+      condition: eq(variables.branch_name, 'main')
+      steps:
+      - template: devops/pipelines/github-sync.yml

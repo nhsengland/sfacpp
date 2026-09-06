@@ -1,0 +1,23 @@
+Package: sfacpp
+Type: Package
+Title: Stochastic Frontier Models (Panel)
+Version: 1.0
+Date: 2024-12-25
+Author: Edmund Haacke
+Maintainer: Edmund Haacke <edmund.haacke@nhs.net>
+Description: Implements the True Fixed/Random Effects, and Generalized True Random Effects (GTRE) models.
+License: GPL (>= 3)
+Imports: 
+    Rcpp (>= 1.0.13),
+    data.table,
+    R6,
+    RcppArmadillo,
+    BH,
+    RcppSpdlog
+LinkingTo:
+    Rcpp,
+    RcppArmadillo,
+    BH,
+    RcppSpdlog
+RoxygenNote: 7.3.2
+SystemRequirements: C++20

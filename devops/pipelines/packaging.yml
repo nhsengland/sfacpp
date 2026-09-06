@@ -1,0 +1,20 @@
+
+steps:
+  - checkout: self
+    displayName: "Checkout"
+    submodules: "recursive"
+  - task: TwineAuthenticate@1
+    displayName: "Authenticate Twine"
+    inputs:
+      artifactFeed: "NHS Advanced Analytics/strategic-analysis-feed"
+  - task: Bash@3
+    displayName: "Build package and upload Artifact Feed"
+    condition: succeeded()
+    inputs:
+      filePath: "$(Build.Repository.LocalPath)/devops/scripts/packaging.sh"
+      arguments: >-
+        -m $(IS_MAIN)
+        -i $(Build.BuildNumber)
+        -r $(release_name)
+        -c $(PYPIRC_PATH)
+        -u $(should_run_ut)

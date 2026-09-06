@@ -1,0 +1,52 @@
+steps:
+  # create a new directory to hold the azure repository
+  - bash: |
+      pwd
+      if [ -d source_repo ]; then
+        rm -rf source_repo;
+      fi
+      mkdir source_repo;
+    workingDirectory: '$(Pipeline.Workspace)'
+    displayName: 'setup folder to checkout azure repo'
+
+  - checkout: self
+    path: source_repo
+
+  - bash: |
+      pwd
+      if [ -d gh_repo ]; then
+        rm -rf gh_repo;
+      fi
+      mkdir gh_repo && cd gh_repo
+      pwd
+      echo "git url:"
+      echo "$BASE_URL"
+      git clone $BASE_URL
+    workingDirectory: '$(Pipeline.Workspace)'
+    displayName: 'Clone Github Repository'
+    env:
+      BASE_URL: $(GITHUB_PUSH_URL_BASE)/$(gh_repo_name)
+      # BASE_URL: $(GITHUB_PUSH_URL)
+
+  - bash: |
+      rsync -cr source_repo/ gh_repo/$GITHUB_REPO_NAME/ --exclude .git --delete
+    workingDirectory: '$(Pipeline.Workspace)'
+    displayName: 'Sync files'
+
+  - bash: |
+      cd "gh_repo/$GITHUB_REPO_NAME"
+      pwd
+      ls .
+      git remote add origin $BASE_URL
+      git config user.name "Azure Pipeline"
+      git config user.email $USER_EMAIL
+      git switch $BRANCH_NAME || git switch -c $BRANCH_NAME
+      git add .
+      git status
+      git commit -m "Release: ${BUILD_BUILDNUMBER} $(Build.SourceVersionMessage)"
+      git push $BASE_URL
+    workingDirectory: '$(Pipeline.Workspace)'
+    displayName: 'Github Commit and Push'
+    env:
+      BASE_URL: $(GITHUB_PUSH_URL_BASE)/$(gh_repo_name)
+      USER_EMAIL: $(GITHUB_USER_EMAIL)

@@ -1,0 +1,28 @@
+{
+    "configurations": [
+        {
+            "name": "Mac",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/opt/homebrew/Cellar/boost/1.89.0/include",
+                "/usr/local/include",
+                "${workspaceFolder}/modules/CppNumericalSolvers/include",
+                "${workspaceFolder}/modules/pybind11/include",
+                "${workspaceFolder}/modules/autodiff/autodiff",
+                "${workspaceFolder}/modules/eigen",
+                "${workspaceFolder}/modules/thread-pool/include",
+                "${workspaceFolder}/modules/ensmallen",
+                "${workspaceFolder}/modules/optim/header_only_version",
+                "${workspaceFolder}/include",
+                "${workspaceFolder}/modules/dlib",
+                "${workspaceFolder}/modules/CARMA/include"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/clang",
+            "cStandard": "c17",
+            "cppStandard": "c++14",
+            "intelliSenseMode": "macos-clang-arm64"
+        }
+    ],
+    "version": 4
+}

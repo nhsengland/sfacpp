@@ -1,0 +1,26 @@
+[submodule "modules/dlib"]
+	path = modules/dlib
+	url = https://github.com/davisking/dlib
+#[submodule "modules/CppNumericalSolvers"]
+#	path = modules/CppNumericalSolvers
+#	url = https://github.com/PatWie/CppNumericalSolvers
+# [submodule "modules/eigen"]
+# 	path = modules/eigen
+# 	url = https://gitlab.com/libeigen/eigen
+[submodule "modules/thread-pool"]
+	path = modules/thread-pool
+	url = https://github.com/bshoshany/thread-pool
+#[submodule "modules/optim"]
+#	path = modules/optim
+#	url = https://github.com/kthohr/optim
+# [submodule "modules/autodiff"]
+#	path = modules/autodiff
+#	url = https://github.com/autodiff/autodiff
+# [submodule "modules/pybind11"]
+# 	path = modules/pybind11
+# 	url = https://github.com/pybind/pybind11
+# 	branch = stable
+# [submodule "modules/CARMA"]
+# 	path = modules/CARMA
+# 	url = https://github.com/RUrlus/carma
+# 	branch = stable

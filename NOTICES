@@ -1,0 +1,15 @@
+This project uses the following third-party libraries:
+
+C++ Core & Python Interface:
+1. Armadillo (Apache 2.0)
+2. Boost (Boost Software License 1.0)
+3. dlib (Boost Software License 1.0)
+4. bs::thread_pool (MIT License)
+5. spdlog (MIT License)
+6. pybind11 (BSD 3-Clause License)
+
+R Interface:
+7. Rcpp (GPL >= 2)
+8. RcppArmadillo (GPL >= 2)
+9. RcppSpdlog (GPL >= 2)
+10. BH (Boost Software License 1.0)

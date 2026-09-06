@@ -1,0 +1,59 @@
+{
+    "tasks": [
+        {
+            "type": "cppbuild",
+            "label": "build local test",
+            "command": "/usr/bin/clang++",
+            "args": [
+                "${workspaceFolder}/src/[!Rcpp]*.cpp",
+                "-DLOCAL_TEST_BUILD",
+                "-DDLIB",
+                "-std=gnu++20",
+                "-I",
+                "${workspaceFolder}/include",
+                "-I",
+                "${workspaceFolder}/modules/dlib",
+                "-I",
+                "${workspaceFolder}/modules/CppNumericalSolvers/include",
+                "-I",
+                "${workspaceFolder}/modules/eigen",
+                "-I",
+                "${workspaceFolder}/modules/thread-pool/include",
+                "-I",
+                "${workspaceFolder}/modules/ensmallen",
+                "-I",
+                "/opt/homebrew/Cellar/boost/1.90.0_1/include",
+                "-I",
+                "/usr/lib/include/arrow",
+                "-I",
+                "/usr/lib/include/parquet",
+                "-L",
+                "/usr/local/lib",
+                "-rpath",
+                "/usr/local/lib",
+                "-larmadillo",
+                "-larrow",
+                "-larrow_compute",
+                "-lparquet",
+                "-o",
+                "${workspaceFolder}/local_test.out",
+                "-g"
+            ]
+        },
+        {
+            "type": "shell",
+            "label": "CMake: build proj",
+            "command": "cmake -S . -B build && cmake --build ./build",
+            "problemMatcher": []
+        },
+        {
+            "type": "shell",
+            "label": "Build & install pysfacpp",
+            "command": "source ${workspaceFolder}/.venv/bin/activate && ${workspaceFolder}/.venv/bin/python3.11 ${workspaceFolder}/setup.py install",
+            "presentation": {
+                "clear": true
+            },
+            "problemMatcher": []
+        }
+    ]
+}

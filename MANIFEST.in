@@ -1,0 +1,3 @@
+include src/*.cpp python/pysfacpp python/CMakeLists.txt
+exclude src/RcppExports.cpp
+graft include
